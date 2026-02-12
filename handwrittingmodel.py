@@ -5,8 +5,9 @@ import tensorflow_datasets as tfds
 import matplotlib.pyplot as plt
 import os
 
-epoch=20
-batch=32
+epoch=10
+batch=64
+lr=1e-4
 
 (train_images, test_images), ds_info = tfds.load(
     'emnist/letters',
@@ -72,15 +73,16 @@ tensorflow.keras.layers.Conv2D(32, (3, 3), activation='relu', input_shape=(28, 2
 tensorflow.keras.layers.MaxPooling2D((2, 2)),
 tensorflow.keras.layers.Conv2D(64, (3, 3), activation='relu'),
 tensorflow.keras.layers.MaxPooling2D((2, 2)),
-tensorflow.keras.layers.Conv2D(64, (3, 3), activation='relu'),
+tensorflow.keras.layers.Conv2D(128, (3, 3), activation='relu'),
 tensorflow.keras.layers.Flatten(),
-tensorflow.keras.layers.Dense(64, activation='relu'),
+tensorflow.keras.layers.Dense(128, activation='relu'),
 tensorflow.keras.layers.Dense(26)
 ])
 
 model.summary()
 
-model.compile(optimizer=tensorflow.keras.optimizers.Adam(learning_rate=1e-5),
+
+model.compile(optimizer=tensorflow.keras.optimizers.Adam(learning_rate=lr),
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
               metrics=['accuracy'])
 
